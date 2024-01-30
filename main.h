@@ -51,7 +51,7 @@ void store_uintX(va_list args, char **buff, int *buff_index,
 		 int *buff_size);
 void w_intX(char **buffer, int *index, long num, int base, int *size);
 char *store_nstr(char *pb, va_list *ar, int *size, char **buf, int len_buf);
-void store_uintb(va_list args, char *buffer, int *buffer_index,
-int *buffer_size);
+void store_uintb(va_list args, char **buff, int *buff_index,
+int *buff_size);
 char *pre_st_bin(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 #endif/*endif*/
