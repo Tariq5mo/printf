@@ -1,0 +1,1 @@
+The goal of this project is to make function working like printf function
