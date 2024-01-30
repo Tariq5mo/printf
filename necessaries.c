@@ -14,7 +14,7 @@ char *chlen(int *sizeofbuf, char *ptrb, char **buffer, int lenbuf)
 	int n;
 
 	n = *sizeofbuf;
-	*buffer = _realloc((void **)buffer, n, *sizeofbuf += 1024);
+	*buffer =(char *)_realloc((void **)buffer, n, *sizeofbuf += 1024);
 	if (!(*buffer))
 		return (NULL);
 	ptrb = *buffer + lenbuf;

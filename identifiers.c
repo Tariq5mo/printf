@@ -43,13 +43,13 @@ int resizes_buffer(char *buff, int *buff_size, int buff_index)
  * @buff_size: Point to the size of the buffer
  * Return: void
  */
-void store_int(va_list args, char *buff, int *buff_index,
+void store_int(va_list args, char **buff, int *buff_index,
 int *buff_size)
 {
 	int n;
 
 	n = va_arg(args, int);
-	w_int(&buff, buff_index, n, 10, buff_size);
+	w_int(buff, buff_index, n, 10, buff_size);
 }
 /**
  * w_int -  Writes an integer to the buffer.
@@ -100,7 +100,7 @@ void w_char(char **buff, int *ind, char cha, int *size)
 
 	if (*ind >= *size - 1)
 	{
-		*size *= 2;
+		*size += 2;
 		new_buff = (char *)malloc(*size);
 		if (!new_buff)
 		{
@@ -110,7 +110,7 @@ void w_char(char **buff, int *ind, char cha, int *size)
 		for (i = 0; i < *ind; i++)
 			new_buff[i] = (*buff)[i];
 		free(*buff);
-			*buff = new_buff;
+		*buff = new_buff;
 	}
 	(*buff)[(*ind)++] = cha;
 	/*(*buff)[*ind] = '\0';e*/
