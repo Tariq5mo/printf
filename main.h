@@ -54,6 +54,4 @@ char *store_nstr(char *pb, va_list *ar, int *size, char **buf, int len_buf);
 void store_uintb(va_list args, char *buffer, int *buffer_index,
 int *buffer_size);
 char *pre_st_bin(char *pb, va_list *ar, int *size, char **buf, int len_buf);
-char *p_generic_pointer(char *pb, va_list *ar, int *size, char **buf,
-int len_buf __attribute__((unused)));
 #endif/*endif*/
