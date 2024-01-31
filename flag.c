@@ -17,6 +17,7 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 {
 	int i, j, n;
 
+	(void)(len_buf);
 	if (check_for(*f, fos) == 0)
 	{
 		i = count_for(*f, fos);
