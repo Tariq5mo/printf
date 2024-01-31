@@ -8,12 +8,12 @@
  * @buff_size: Pointer to the size of buffer.
  * Return: Void
  */
-void store_uintb(va_list args, char *buff, int *buff_index,
+void store_uintb(va_list args, char **buff, int *buff_index,
 int *buff_size)
 {
 	unsigned int number = va_arg(args, unsigned int);
 
-	w_intX(&buff, buff_index, number, 2, buff_size);
+	w_intX(buff, buff_index, number, 2, buff_size);
 }
 /**
  * pre_st_bin - Prepare arguments for store_uintb function
@@ -31,6 +31,6 @@ char *pre_st_bin(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 
 	(void)(len_buf);
 	buff_index = pb - *buf;
-	store_uintb(*ar, *buf, &buff_index, size);
+	store_uintb(*ar, buf, &buff_index, size);
 	return ((buff_index - 1) + *buf);
 }

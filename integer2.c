@@ -16,7 +16,7 @@ char *pre_st_int(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 
 	(void)(len_buf);
 	buff_index = pb - *buf;
-	store_int(*ar, *buf, &buff_index, size);
+	store_int(*ar, buf, &buff_index, size);
 	return ((buff_index - 1) + *buf);
 }
 /**
@@ -35,7 +35,7 @@ char *pre_st_oct(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 
 	(void)(len_buf);
 	buff_index = pb - *buf;
-	store_uinto(*ar, *buf, &buff_index, size);
+	store_uinto(*ar, buf, &buff_index, size);
 	return ((buff_index - 1) + *buf);
 }
 /**
@@ -54,7 +54,7 @@ char *pre_st_uni(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 
 	buff_index = pb - *buf;
 	(void)(len_buf);
-	store_uintu(*ar, *buf, &buff_index, size);
+	store_uintu(*ar, buf, &buff_index, size);
 	return ((buff_index - 1) + *buf);
 }
 /**
@@ -73,7 +73,7 @@ char *pre_st_hex(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 
 	(void)(len_buf);
 	buff_index = pb - *buf;
-	store_uintx(*ar, *buf, &buff_index, size);
+	store_uintx(*ar, buf, &buff_index, size);
 	return ((buff_index - 1) + *buf);
 }
 /**
@@ -92,6 +92,6 @@ char *pre_st_HEX(char *pb, va_list *ar, int *size, char **buf, int len_buf)
 
 	(void)(len_buf);
 	buff_index = pb - *buf;
-	store_uintX(*ar, *buf, &buff_index, size);
+	store_uintX(*ar, buf, &buff_index, size);
 	return ((buff_index - 1) + *buf);
 }

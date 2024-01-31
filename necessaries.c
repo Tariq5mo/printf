@@ -14,7 +14,7 @@ char *chlen(int *sizeofbuf, char *ptrb, char **buffer, int lenbuf)
 	int n;
 
 	n = *sizeofbuf;
-	*buffer = _realloc((void **)buffer, n, *sizeofbuf += 1024);
+	*buffer =(char *)_realloc((void **)buffer, n, *sizeofbuf += 1024);
 	if (!(*buffer))
 		return (NULL);
 	ptrb = *buffer + lenbuf;
@@ -60,7 +60,7 @@ void *_realloc(void **ptr, unsigned int old_size, unsigned int new_size)
 */
 void arrofst(fs **for_sp)
 {
-	*for_sp = malloc(sizeof(fs) * 12);/*allocate for array of structures*/
+	*for_sp = malloc(sizeof(fs) * 13);/*allocate for array of structures*/
 	if (*for_sp == NULL)
 		exit(-1);
 	/*Initialize array of structures with format specifiers & functions*/
@@ -112,12 +112,15 @@ int store_buf(fs **fos, char **bu, char *pb, va_list *a, int *s, const char *f)
 		if (*f == '%')
 		{
 			f++;
-			for (i = 0; (*fos)[i].for_spec; i++)
+			pb = _flags(pb, a, s, bu, lbuf, &f, fos);
+			for (i = 0; (*fos)[i].for_spec && *pb != '$'; i++)
 				if (*f == (*fos)[i].for_spec[0])
 				{
 					pb = (*fos)[i].ptrf(pb, a, s, bu, lbuf);
 					break;
 				}
+			if (*pb == '$')
+				pb -= 2;
 			if (!(*fos)[i].for_spec && *f)
 			{
 				*pb = *(--f);

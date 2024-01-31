@@ -9,12 +9,12 @@
  * @buff_size: Pointer to the size of buffer.
  * Return: Void.
  */
-void store_uinto(va_list args, char *buff, int *buff_index,
+void store_uinto(va_list args, char **buff, int *buff_index,
 int *buff_size)
 {
 	unsigned int number = va_arg(args, unsigned int);
 
-	w_int(&buff, buff_index, number, 8, buff_size);
+	w_int(buff, buff_index, number, 8, buff_size);
 }
 /**
  * store_uintu - Store an unsigned number
@@ -25,12 +25,12 @@ int *buff_size)
  * @buff_size: Pointer to the size of buffer.
  * Return: Void.
  */
-void store_uintu(va_list args, char *buff, int *buff_index,
+void store_uintu(va_list args, char **buff, int *buff_index,
 int *buff_size)
 {
 	unsigned int number = va_arg(args, unsigned int);
 
-	w_int(&buff, buff_index, number, 10, buff_size);
+	w_int(buff, buff_index, number, 10, buff_size);
 }
 /**
  * store_uintx - Store a hexa number
@@ -41,12 +41,12 @@ int *buff_size)
  * @buff_size: Pointer to the size of buffer.
  * Return: Void.
  */
-void store_uintx(va_list args, char *buff, int *buff_index,
+void store_uintx(va_list args, char **buff, int *buff_index,
 int *buff_size)
 {
 	unsigned int number = va_arg(args, unsigned int);
 
-	w_int(&buff, buff_index, number, 16, buff_size);
+	w_int(buff, buff_index, number, 16, buff_size);
 }
 /**
  * store_uintX - Store a hexa number in capital
@@ -57,12 +57,12 @@ int *buff_size)
  * @buff_size: Pointer to the size of buffer.
  * Return: Void.
  */
-void store_uintX(va_list args, char *buff, int *buff_index,
+void store_uintX(va_list args, char **buff, int *buff_index,
 int *buff_size)
 {
 	unsigned int number = va_arg(args, unsigned int);
 
-	w_intX(&buff, buff_index, number, 16, buff_size);
+	w_intX(buff, buff_index, number, 16, buff_size);
 }
 /**
  * w_intX -  Writes a hexa integer to the buffer.
