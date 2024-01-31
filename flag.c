@@ -15,7 +15,7 @@
 char *_flags(char *pb, va_list *ar,
 int *size, char **buf, int len_buf, const char **f, fs **fos)
 {
-	int i, j;
+	int i, j, n;
 
 	if (check_for(*f, fos) == 0)
 	{
@@ -37,17 +37,24 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 				*pb = 'X';
 				return (++pb);
 			}
+			else if (**f == 'o')
+			{
+				*pb++ = '0';
+				return (pb);
+			}
 		}
 		else if (check_c('+', i, *f) == 0)
 		{
 			while (check_for(*f, fos) == 0)
 				(*f)++;
-			if (**f == 'd')
+			if (**f == 'd' || **f == 'i')
 			{
 				j = va_arg(*ar, int);
 				if (j > -1)
 					*pb++ = '+';
-				pb = pre_st_int(pb, ar, size, buf, len_buf);
+				n = pb - *buf;
+				w_int(buf, &n, j, 10, size);
+				pb = n - 1 + *buf;
 				pb++;
 				*pb = '$';
 			}
@@ -55,9 +62,20 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 		}
 		else if (check_c(' ', i, *f) == 0)
 		{
-			*pb = ' ';
-			(*f) += i;
-			return (++pb);
+			while (check_for(*f, fos) == 0)
+                                (*f)++;
+                        if (**f == 'd' || **f == 'i')
+                        {
+                                j = va_arg(*ar, int);
+                                if (j > -1)
+                                        *pb++ = ' ';
+                                n = pb - *buf;
+                                w_int(buf, &n, j, 10, size);
+                                pb = n - 1 + *buf;
+                                pb++;
+                                *pb = '$';
+                        }
+                        return (pb);
 		}
 	}
 	return (pb);
@@ -74,8 +92,12 @@ int check_for(const char *f, fs **fos)
 	int i;
 
 	for (i = 0; (*fos)[i].for_spec; i++)
+	{
 		if (*f == (*fos)[i].for_spec[0])
 			return (-1);
+		else if(*f == '\0')
+			exit(-1);
+	}
 	return (0);
 }
 /**

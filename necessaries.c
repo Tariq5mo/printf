@@ -120,7 +120,7 @@ int store_buf(fs **fos, char **bu, char *pb, va_list *a, int *s, const char *f)
 					break;
 				}
 			if (*pb == '$')
-				pb -= 2;
+				pb -= 1;
 			if (!(*fos)[i].for_spec && *f)
 			{
 				*pb = *(--f);
