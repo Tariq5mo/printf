@@ -15,7 +15,8 @@
 char *_flags(char *pb, va_list *ar,
 int *size, char **buf, int len_buf, const char **f, fs **fos)
 {
-	int i, j, n;
+	int i, n;
+	double j;
 
 	(void)(len_buf);
 	if (check_for(*f, fos) == 0)
@@ -24,7 +25,7 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 		if (i == -1)
 		{
 			i = check_c('\0', 100, *f);
-			*f += i;
+			*f += i + 1;
 			*pb = '$';
 			return (pb);
 		}
@@ -35,37 +36,37 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 				(*f)++;
 			if (**f == 'x')
 			{
-				j = va_arg(*ar, int);
+				j = va_arg(*ar, unsigned int);
                                 if (j > 0)
 				{
 					*pb++ = '0';
-					*pb = 'x';
+					*pb++ = 'x';
 				}
 				n = pb - *buf;
 				w_int(buf, &n, j, 16, size);
-				pb = n - 1 + *buf;
+				pb = n + *buf;
 				pb++;
 				*pb = '$';
 				return (pb);
 			}
 			else if (**f == 'X')
 			{
-				j = va_arg(*ar, int);
+				j = va_arg(*ar, unsigned int);
 				if (j > 0)
 				{
 					*pb++ = '0';
-					*pb = 'X';
+					*pb++ = 'X';
 				}
 				n = pb - *buf;
-				w_int(buf, &n, j, 16, size);
-				pb = n - 1 + *buf;
+				w_intX(buf, &n, j, 16, size);
+				pb = n  + *buf;
 				pb++;
 				*pb = '$';
 				return (pb);
 			}
 			else if (**f == 'o')
 			{
-				j = va_arg(*ar, int);
+				j = va_arg(*ar, unsigned int);
 				if (j > 0)
 					*pb++ = '0';
 				n = pb - *buf;
