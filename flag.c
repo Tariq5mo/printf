@@ -21,6 +21,13 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 	if (check_for(*f, fos) == 0)
 	{
 		i = count_for(*f, fos);
+		if (i == -1)
+		{
+			i = check_c('\0', 100, *f);
+			*f += i;
+			*pb = '$';
+			return (pb);
+		}
 		if (check_c('#', i, *f) == 0)
 		{
 			(*f)++;
@@ -28,19 +35,44 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 				(*f)++;
 			if (**f == 'x')
 			{
-				*pb++ = '0';
-				*pb = 'x';
-				return (++pb);
+				j = va_arg(*ar, int);
+                                if (j > 0)
+				{
+					*pb++ = '0';
+					*pb = 'x';
+				}
+				n = pb - *buf;
+				w_int(buf, &n, j, 16, size);
+				pb = n - 1 + *buf;
+				pb++;
+				*pb = '$';
+				return (pb);
 			}
 			else if (**f == 'X')
 			{
-				*pb++ = '0';
-				*pb = 'X';
-				return (++pb);
+				j = va_arg(*ar, int);
+				if (j > 0)
+				{
+					*pb++ = '0';
+					*pb = 'X';
+				}
+				n = pb - *buf;
+				w_int(buf, &n, j, 16, size);
+				pb = n - 1 + *buf;
+				pb++;
+				*pb = '$';
+				return (pb);
 			}
 			else if (**f == 'o')
 			{
-				*pb++ = '0';
+				j = va_arg(*ar, int);
+				if (j > 0)
+					*pb++ = '0';
+				n = pb - *buf;
+				w_int(buf, &n, j, 8, size);
+				pb = n - 1 + *buf;
+				pb++;
+				*pb = '$';
 				return (pb);
 			}
 		}
@@ -96,8 +128,6 @@ int check_for(const char *f, fs **fos)
 	{
 		if (*f == (*fos)[i].for_spec[0])
 			return (-1);
-		else if(*f == '\0')
-			exit(-1);
 	}
 	return (0);
 }
@@ -134,8 +164,12 @@ int count_for(const char *f, fs **fos)
 	for (j = 0;; f++, j++)
 	{
 		for (i = 0; (*fos)[i].for_spec; i++)
+		{
 			if (*f == (*fos)[i].for_spec[0])
 				return (j);
+			if (*f == '\0')
+				return (-1);
+		}
 	}
 	return (0);
 }
