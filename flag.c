@@ -15,9 +15,10 @@
 char *_flags(char *pb, va_list *ar,
 int *size, char **buf, int len_buf, const char **f, fs **fos)
 {
-	int i, n;
+	int i, n, m;
 	double j;
 
+	m = 0;
 	(void)(len_buf);
 	if (check_for(*f, fos) == 0)
 	{
@@ -33,10 +34,18 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 		{
 			(*f)++;
 			while (check_for(*f, fos) == 0)/*find where formator*/
+			{
 				(*f)++;
+				m++;
+			}
 			if (**f == 'x')
 			{
-				j = va_arg(*ar, unsigned int);
+				if (check_c('l', i, *f - 1 - m) == 0)
+					j = va_arg(*ar, unsigned long int);
+				else if (check_c('h', i, *f - 1 - m) == 0)
+					j = va_arg(*ar, unsigned short int);
+				else
+					j = va_arg(*ar, unsigned int);
                                 if (j > 0)
 				{
 					*pb++ = '0';
@@ -51,7 +60,12 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 			}
 			else if (**f == 'X')
 			{
-				j = va_arg(*ar, unsigned int);
+				if (check_c('l', i, *f - 1 - m) == 0)
+					j = va_arg(*ar, unsigned long int);
+				else if (check_c('h', i, *f - 1 - m) == 0)
+					j = va_arg(*ar, unsigned short int);
+				else
+					j = va_arg(*ar, unsigned int);
 				if (j > 0)
 				{
 					*pb++ = '0';
@@ -66,7 +80,12 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 			}
 			else if (**f == 'o')
 			{
-				j = va_arg(*ar, unsigned int);
+				if (check_c('l', i, *f - 1 - m) == 0)
+                                        j = va_arg(*ar, unsigned long int);
+                                else if (check_c('h', i, *f - 1 - m) == 0)
+                                        j = va_arg(*ar, unsigned short int);
+                                else
+                                        j = va_arg(*ar, unsigned int);
 				if (j > 0)
 					*pb++ = '0';
 				n = pb - *buf;
@@ -80,10 +99,18 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 		else if (check_c('+', i, *f) == 0)
 		{
 			while (check_for(*f, fos) == 0)
+			{
 				(*f)++;
+				m++;
+			}
 			if (**f == 'd' || **f == 'i')
 			{
-				j = va_arg(*ar, int);
+				if (check_c('l', i, *f - 1 - m) == 0)
+                                        j = va_arg(*ar, long int);
+                                else if (check_c('h', i, *f - 1 - m) == 0)
+                                        j = va_arg(*ar, short int);
+                                else
+                                        j = va_arg(*ar, int);
 				if (j > -1)
 					*pb++ = '+';
 				n = pb - *buf;
@@ -97,10 +124,18 @@ int *size, char **buf, int len_buf, const char **f, fs **fos)
 		else if (check_c(' ', i, *f) == 0)
 		{
 			while (check_for(*f, fos) == 0)
+			{
                                 (*f)++;
+				m++;
+			}
                         if (**f == 'd' || **f == 'i')
                         {
-                                j = va_arg(*ar, int);
+                                if (check_c('l', i, *f - 1 - m) == 0)
+                                        j = va_arg(*ar, long int);
+                                else if (check_c('h', i, *f - 1 - m) == 0)
+                                        j = va_arg(*ar, short int);
+                                else
+                                        j = va_arg(*ar, int);
                                 if (j > -1)
                                         *pb++ = ' ';
                                 n = pb - *buf;
